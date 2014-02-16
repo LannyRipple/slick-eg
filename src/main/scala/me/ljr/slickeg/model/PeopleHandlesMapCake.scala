@@ -1,9 +1,9 @@
 package me.ljr.slickeg.model
 
 trait PeopleHandlesMapCake {
-  self: Profiled with PeopleCake with HandlesCake =>
+  self: DALInjector with PeopleCake with HandlesCake =>
 
-  import profile.simple._
+  import profile.slickDriver.simple._
 
   val peopleHandlesMap = TableQuery[PeopleHandlesMap]
 
@@ -12,13 +12,13 @@ trait PeopleHandlesMapCake {
     def pid = column[PersonId]("pid", O.NotNull)
     def hid = column[HandleId]("hid", O.NotNull)
 
-    def peopleFK = foreignKey("People_FK", pid, people){_.id}
-    def handlesFK = foreignKey("Handles_FK", hid, handles){_.id}
-
     def * = (pid, hid)
 
-    def uniqPfkHfk = index("uniqPfkHfk", (pid, hid), unique = true)
-    def indexPfk = index("idxPfk", pid)
-    def indexHfk = index("idxHfk", hid)
+    // Constraints
+    def peopleFK = foreignKey("phm_pfk", pid, people){_.id}
+    def handlesFK = foreignKey("phm_hfk", hid, handles){_.id}
+    def uniqPfkHfk = index("phm_uniqPfkHfk", (pid, hid), unique = true)
+    def indexPfk = index("phm_idxPfk", pid)
+    def indexHfk = index("phm_idxHfk", hid)
   }
 }

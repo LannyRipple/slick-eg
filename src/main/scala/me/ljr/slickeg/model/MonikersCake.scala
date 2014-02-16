@@ -1,9 +1,9 @@
 package me.ljr.slickeg.model
 
 trait MonikersCake {
-  self: Profiled =>
+  self: DALInjector =>
 
-  import profile.simple._
+  import profile.slickDriver.simple._
 
   val monikers = TableQuery[Monikers]
 
@@ -17,7 +17,7 @@ trait MonikersCake {
 
     def * = (id, name) <> (Moniker.tupled, Moniker.unapply)
 
-    def uniqName = index("idxName", name)
+    def uniqName = index("m_idxName", name)
   }
 }
 

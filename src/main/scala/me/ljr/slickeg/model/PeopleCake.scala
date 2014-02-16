@@ -1,9 +1,9 @@
 package me.ljr.slickeg.model
 
 trait PeopleCake {
-  self: Profiled =>
+  self: DALInjector =>
 
-  import profile.simple._
+  import profile.slickDriver.simple._
 
   val people = TableQuery[People]
 
@@ -17,7 +17,7 @@ trait PeopleCake {
 
     def * = (id, guid) <> (Person.tupled, Person.unapply)
 
-    def uniqGuid = index("uniqGuid", guid, unique = true)
+    def uniqGuid = index("p_uniqGuid", guid, unique = true)
   }
 }
 
