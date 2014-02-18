@@ -7,7 +7,7 @@ trait MonikersCake {
 
   val monikers = TableQuery[Monikers]
 
-  implicit val monikerIdColumnType =
+  implicit def monikerIdColumnType =
     MappedColumnType.base[MonikerId, Long](_.id, new MonikerId(_))
 
   class Monikers(tag: Tag) extends Table[Moniker](tag, "Monikers") {

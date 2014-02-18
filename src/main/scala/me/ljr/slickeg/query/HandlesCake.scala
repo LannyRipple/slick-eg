@@ -5,8 +5,8 @@ import me.ljr.slickeg.model._
 trait HandlesCake {
   self: DALHolder =>
 
+  import DAL.slickDriver.simple._
   import DAL._
-  import DAL.dbconf.slickDriver.simple._
 
   type HandlesQuery = Query[DAL#Handles, Handle]
 

@@ -4,5 +4,5 @@ import me.ljr.slickeg.model._
 
 trait DALHolder {
 
-  val DAL: DAL
+  protected val DAL: DAL
 }

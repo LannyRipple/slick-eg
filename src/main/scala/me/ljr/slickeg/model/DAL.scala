@@ -11,7 +11,10 @@ class DAL(override val dbconf: DBConf) extends DALInjector
 
   import dbconf.slickDriver.simple._
 
-  val ddl = people.ddl ++ handles.ddl ++ monikers.ddl ++ peopleHandlesMap.ddl ++ handlesMonikersMap.ddl
+  val slickDriver: dbconf.slickDriver.type = dbconf.slickDriver
+
+  val ddl: dbconf.slickDriver.type#DDL =
+    people.ddl ++ handles.ddl ++ monikers.ddl ++ peopleHandlesMap.ddl ++ handlesMonikersMap.ddl
 
   val db: Database = dbconf.database
 }

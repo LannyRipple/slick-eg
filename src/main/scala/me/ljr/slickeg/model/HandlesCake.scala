@@ -7,7 +7,7 @@ trait HandlesCake {
 
   val handles = TableQuery[Handles]
 
-  implicit val handleIdColumnType =
+  implicit def handleIdColumnType =
     MappedColumnType.base[HandleId, Long](_.id, new HandleId(_))
 
   class Handles(tag: Tag) extends Table[Handle](tag, "Handles") {

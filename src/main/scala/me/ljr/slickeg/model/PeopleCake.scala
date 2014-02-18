@@ -7,7 +7,7 @@ trait PeopleCake {
 
   val people = TableQuery[People]
 
-  implicit val personIdColumnType =
+  implicit def personIdColumnType =
     MappedColumnType.base[PersonId, Long](_.id, new PersonId(_))
 
   class People(tag: Tag) extends Table[Person](tag, "People") {

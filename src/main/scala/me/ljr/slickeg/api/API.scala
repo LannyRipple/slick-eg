@@ -5,10 +5,11 @@ import scala.language.postfixOps
 import me.ljr.slickeg.query.QueryLib
 import me.ljr.slickeg.model.DAL
 
-class API(override val DAL: DAL) extends QueryLib(DAL) {
+class API(override protected val DAL: DAL) extends QueryLib(DAL) {
 
-  import DAL._
-  import DAL.dbconf.slickDriver.simple._
+  import DAL.slickDriver.simple._
+
+  private val db = DAL.db
 
   def getHandlesFromEmd5ViaPeople(emd5: Column[String]): List[String] = {
     db withSession {implicit session =>
