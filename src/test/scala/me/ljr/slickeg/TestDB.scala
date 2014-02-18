@@ -5,23 +5,12 @@ import me.ljr.slickeg.api.API
 
 object TestDB {
 
-  /*
-   Start the server in a terminal with
-      java -cp ~/.m2/repository/com/h2database/h2/1.3.174/h2-1.3.174.jar org.h2.tools.Shell
-
-   using URL
-
-      jdbc:h2:~/test;AUTO_SERVER=TRUE;DATABASE_TO_UPPER=FALSE
-
-   ToDo - Figure out using jdbc:h2:mem:test;DATABASE_TO_UPPER=FALSE and connecting to it using Shell
-          Docs say jdbc:h2:tcp://localhost/mem:test but can't seem to make it work.
-   */
   val dbconf = DBConf(
     slickDriverName = "scala.slick.driver.H2Driver",
     jdbcDriverName = "org.h2.Driver",
     jdbcUrl =
       List(
-        "jdbc:h2:~/test",
+        "jdbc:h2:mem:test",
         "DATABASE_TO_UPPER=FALSE"
       ).mkString(";"),
     user = "sa",
@@ -34,12 +23,27 @@ object TestDB {
   import DAL.slickDriver.simple._
   import DAL._
 
+  def createAndPopulate() {
+    DAL.db withSession {implicit session =>
+      createSchema()
+      populateData()
+    }
+  }
+
   def createSchema()(implicit session: Session) {
     ddl.create
   }
 
   def dropSchema()(implicit session: Session) {
     ddl.drop
+  }
+
+  def populateData()(implicit session: Session) {
+    populatePeople()
+    populateHandles()
+    populateMonikers()
+    populatePeopleHandles()
+    populateHandlesMonikers()
   }
 
   def populatePeople()(implicit session: Session) {
@@ -101,13 +105,5 @@ object TestDB {
       hm(1, 1),
       hm(3, 1)
     )
-  }
-
-  def populateData()(implicit session: Session) {
-    populatePeople()
-    populateHandles()
-    populateMonikers()
-    populatePeopleHandles()
-    populateHandlesMonikers()
   }
 }
