@@ -3,7 +3,7 @@ package me.ljr.slickeg.model
 trait PeopleCake {
   self: DALInjector =>
 
-  import profile.slickDriver.simple._
+  import dbconf.slickDriver.simple._
 
   val people = TableQuery[People]
 

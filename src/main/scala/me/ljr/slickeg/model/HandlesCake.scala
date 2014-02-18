@@ -3,7 +3,7 @@ package me.ljr.slickeg.model
 trait HandlesCake {
   self: DALInjector =>
 
-  import profile.slickDriver.simple._
+  import dbconf.slickDriver.simple._
 
   val handles = TableQuery[Handles]
 

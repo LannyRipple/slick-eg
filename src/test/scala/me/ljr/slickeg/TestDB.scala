@@ -1,21 +1,20 @@
 package me.ljr.slickeg
 
 import me.ljr.slickeg.model._
+import me.ljr.slickeg.api.API
 
-object Basic {
+object TestDB {
 
-  val dbc = DBConf("scala.slick.driver.H2Driver", "org.h2.Driver", "jdbc:h2:mem:test", "test", "test")
-  val db = dbc.database
+  val dbconf = DBConf("scala.slick.driver.H2Driver", "org.h2.Driver", "jdbc:h2:mem:test", user = "", password = "")
 
-  object DAL extends DAL(dbc)
+  object DAL extends DAL(dbconf)
+  object API extends API(DAL)
 
-  import DAL.profile.slickDriver.simple._
+  def populateSchema(DAL: DAL) {
+    import DAL._
+    import DAL.dbconf.slickDriver.simple._
 
-  def populateSchema() {
-    db withSession { implicit sess =>
-      import DAL._
-
-      ddl.drop
+    db withSession { implicit session =>
       ddl.create
 
       def p(id: Long, guid: String) = Person(new PersonId(id), guid)

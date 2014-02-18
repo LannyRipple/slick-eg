@@ -3,7 +3,7 @@ package me.ljr.slickeg.model
 trait MonikersCake {
   self: DALInjector =>
 
-  import profile.slickDriver.simple._
+  import dbconf.slickDriver.simple._
 
   val monikers = TableQuery[Monikers]
 

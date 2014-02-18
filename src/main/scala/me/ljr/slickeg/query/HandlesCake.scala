@@ -6,7 +6,7 @@ trait HandlesCake {
   self: DALHolder =>
 
   import DAL._
-  import DAL.profile.slickDriver.simple._
+  import DAL.dbconf.slickDriver.simple._
 
   type HandlesQuery = Query[DAL#Handles, Handle]
 
