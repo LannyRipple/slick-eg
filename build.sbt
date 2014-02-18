@@ -9,5 +9,6 @@ scalacOptions := Seq("-feature", "-unchecked", "-deprecation")
 libraryDependencies ++= Seq(
   "com.typesafe.slick" %% "slick" % "2.0.1-RC1",
   "com.h2database" % "h2" % "1.3.175",
-  "org.slf4j" % "slf4j-simple" % "1.7.6"
+  "org.slf4j" % "slf4j-simple" % "1.7.6",
+  "org.specs2" %% "specs2" % "2.3.8" % "test"
 )

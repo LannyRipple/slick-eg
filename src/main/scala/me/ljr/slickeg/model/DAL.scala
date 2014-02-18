@@ -1,6 +1,6 @@
 package me.ljr.slickeg.model
 
-class DAL(val profile: DBConf) extends DALInjector
+class DAL(override val profile: DBConf) extends DALInjector
   with PeopleCake
   with HandlesCake
   with MonikersCake
@@ -11,4 +11,5 @@ class DAL(val profile: DBConf) extends DALInjector
 
   val ddl =  people.ddl ++ handles.ddl ++ monikers.ddl ++ peopleHandlesMap.ddl ++ handlesMonikersMap.ddl
 
+  def db(): Database = profile.database()
 }
