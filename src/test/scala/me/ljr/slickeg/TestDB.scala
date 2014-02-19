@@ -8,7 +8,12 @@ object TestDB {
   val dbconf = DBConf(
     slickDriverName = "scala.slick.driver.H2Driver",
     jdbcDriverName = "org.h2.Driver",
-    jdbcUrl = "jdbc:h2:mem:test",
+    jdbcUrl =
+      List(
+        "jdbc:h2:mem:test",
+        "DATABASE_TO_UPPER=FALSE",    // ANSI standard says ignore case unless quoted but that's a pain to debug
+        "DB_CLOSE_DELAY=-1"           // Keep DB contents as long as JVM is alive (vs. wipe on last connection close)
+      ).mkString(";"),
     user = "sa",
     password = ""
   )
@@ -55,7 +60,7 @@ object TestDB {
     handles.forceInsertAll(
       Seq(
         h(1, "email", "md5-lanny@spotright.com", Some("lanny@spotright.com")),
-        h(2, "twitter", "md5-lannyripple", Some("lannyRipple")),
+        h(2, "twitter", "md5-lannyripple", Some("lannyripple")),
         h(3, "email", "md5-dave@spotright.com", None),
         h(4, "twitter", "md5-nhalko", Some("nhalko"))
       ): _*

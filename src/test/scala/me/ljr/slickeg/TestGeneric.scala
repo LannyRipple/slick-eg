@@ -20,11 +20,11 @@ class TestGeneric extends Specification {
 
     "handles from emd5s via people should work" in {
       val xs = db withSession { implicit session =>
-        API.emd52handlesViaPeople("md5-lanny@spotright.com")
+        API.emd52handlesViaPeople("md5-lanny@spotright.com", "twitter")
       }
-      println(xs)
-      ok
+
+      xs must contain("lannyripple")
+      xs must have length(1)
     }
   }
-
 }
