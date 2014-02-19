@@ -38,9 +38,20 @@ class API(override protected val DAL: DAL) extends QueryLib(DAL) {
     db withSession {implicit session =>
       val q = emd52handlesViaPeopleCompiled(emd5, targetAuth)
 
-      println(q.selectStatement)
+      // println(q.selectStatement)
 
       q.list()
     }
   }
+
+  // Mixing in StaticQuery
+  // Trick is to execute with DAL.jdbcDatabase instead of DAL.database
+  import scala.slick.jdbc.{GetResult, StaticQuery => Q}
+
+  val getPersonByGuid = Q.query[String, (Long, String)](
+    """
+      |SELECT *
+      |FROM "People" p
+      |WHERE p."guid" = ?
+    """.stripMargin)
 }

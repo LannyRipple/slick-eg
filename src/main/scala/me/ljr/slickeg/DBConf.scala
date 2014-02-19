@@ -1,5 +1,6 @@
 package me.ljr.slickeg
 
+import scala.slick.driver.JdbcDriver.backend
 import scala.slick.driver.JdbcProfile
 
 object DBConf {
@@ -63,4 +64,12 @@ case class DBConf(
       password = password
     )
   }
+
+  lazy val jdbcDatabase: backend.Database =
+    backend.Database.forURL(
+      jdbcUrl,
+      driver = jdbcDriverName,
+      user = user,
+      password = password
+    )
 }

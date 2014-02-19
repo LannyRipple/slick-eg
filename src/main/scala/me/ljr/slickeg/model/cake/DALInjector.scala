@@ -1,5 +1,7 @@
 package me.ljr.slickeg.model.cake
 
+import scala.slick.driver.JdbcDriver.backend
+
 import me.ljr.slickeg.DBConf
 
 trait DALInjector {
@@ -9,4 +11,6 @@ trait DALInjector {
   val slickDriver: dbconf.slickDriver.type = dbconf.slickDriver
 
   val database: slickDriver.simple.Database = dbconf.database
+
+  val jdbcDatabase: backend.Database = dbconf.jdbcDatabase
 }
