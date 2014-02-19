@@ -1,4 +1,5 @@
 package me.ljr.slickeg.model
+package cake
 
 trait PeopleHandlesMapCake {
   self: DALInjector with PeopleCake with HandlesCake =>
@@ -17,7 +18,9 @@ trait PeopleHandlesMapCake {
     // Constraints
     def peopleFK = foreignKey("phm_pfk", pid, people){_.id}
     def handlesFK = foreignKey("phm_hfk", hid, handles){_.id}
+
     def uniqPfkHfk = index("phm_uniqPfkHfk", (pid, hid), unique = true)
+
     def indexPfk = index("phm_idxPfk", pid)
     def indexHfk = index("phm_idxHfk", hid)
   }

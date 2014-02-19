@@ -1,4 +1,5 @@
 package me.ljr.slickeg.model
+package cake
 
 trait MonikersCake {
   self: DALInjector =>
@@ -20,8 +21,3 @@ trait MonikersCake {
     def uniqName = index("m_idxName", name)
   }
 }
-
-class MonikerId(val id: Long) extends AnyVal
-
-case class Moniker(id: MonikerId, name: String)
-

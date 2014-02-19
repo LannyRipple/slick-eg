@@ -8,11 +8,7 @@ object TestDB {
   val dbconf = DBConf(
     slickDriverName = "scala.slick.driver.H2Driver",
     jdbcDriverName = "org.h2.Driver",
-    jdbcUrl =
-      List(
-        "jdbc:h2:mem:test",
-        "DATABASE_TO_UPPER=FALSE"
-      ).mkString(";"),
+    jdbcUrl = "jdbc:h2:mem:test",
     user = "sa",
     password = ""
   )
@@ -24,7 +20,7 @@ object TestDB {
   import DAL._
 
   def createAndPopulate() {
-    DAL.db withSession {implicit session =>
+    DAL.database withSession {implicit session =>
       createSchema()
       populateData()
     }
@@ -39,14 +35,7 @@ object TestDB {
   }
 
   def populateData()(implicit session: Session) {
-    populatePeople()
-    populateHandles()
-    populateMonikers()
-    populatePeopleHandles()
-    populateHandlesMonikers()
-  }
 
-  def populatePeople()(implicit session: Session) {
     def p(id: Long, guid: String) = Person(new PersonId(id), guid)
 
     people.forceInsertAll(
@@ -59,9 +48,7 @@ object TestDB {
         p(6, "jason")
       ): _*
     )
-  }
 
-  def populateHandles()(implicit session: Session) {
     def h(id: Long, auth: String, md5: String, handle: Option[String] = None) =
       Handle(new HandleId(id), auth, md5, handle)
 
@@ -73,9 +60,7 @@ object TestDB {
         h(4, "twitter", "md5-nhalko", Some("nhalko"))
       ): _*
     )
-  }
 
-  def populateMonikers()(implicit session: Session) {
     def m(id: Long, name: String) = Moniker(new MonikerId(id), name)
 
     monikers.forceInsertAll(
@@ -83,9 +68,7 @@ object TestDB {
         m(1, "fc-01")
       ): _*
     )
-  }
 
-  def populatePeopleHandles()(implicit session: Session) {
     def ph(pid: Long, hid: Long): (PersonId, HandleId) =
       (new PersonId(pid), new HandleId(hid))
 
@@ -95,9 +78,7 @@ object TestDB {
       ph(2, 3),
       ph(3, 4)
     )
-  }
 
-  def populateHandlesMonikers()(implicit session: Session) {
     def hm(hid: Long, mid: Long): (HandleId, MonikerId) =
       (new HandleId(hid), new MonikerId(mid))
 

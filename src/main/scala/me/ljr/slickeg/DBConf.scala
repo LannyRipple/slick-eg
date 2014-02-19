@@ -45,6 +45,12 @@ case class DBConf(
       // with jdbcUrl "jdbc:h2:tcp://localhost/mem:test"
       //
       // See: http://h2-database.66688.n3.nabble.com/In-Memory-Database-and-TCP-Server-Queries-td4027147.html
+      //
+      // Alternative debugging tool is to put
+      //
+      //     org.h2.tools.Server.startWebServer(db.createConnection())
+      //
+      // in your code to open an H2 browser.
       org.h2.tools.Server.createTcpServer().start()
     }
 

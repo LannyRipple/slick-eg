@@ -1,4 +1,5 @@
 package me.ljr.slickeg.model
+package cake
 
 trait PeopleCake {
   self: DALInjector =>
@@ -20,7 +21,3 @@ trait PeopleCake {
     def uniqGuid = index("p_uniqGuid", guid, unique = true)
   }
 }
-
-class PersonId(val id: Long) extends AnyVal
-
-case class Person(id: PersonId, guid: String)

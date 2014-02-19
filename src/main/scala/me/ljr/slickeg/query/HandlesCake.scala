@@ -3,7 +3,7 @@ package me.ljr.slickeg.query
 import me.ljr.slickeg.model._
 
 trait HandlesCake {
-  self: DALHolder =>
+  self: DALHolder with PeopleCake =>
 
   import DAL.slickDriver.simple._
   import DAL._
@@ -20,14 +20,13 @@ trait HandlesCake {
       h <- handles if h.auth === auth && h.handle === handle
     } yield h
 
-  def relatedHandlesViaPeople(q: DAL#Handles): HandlesQuery =
+  def relatedPeople(h: DAL#Handles): PeopleQuery =
     for {
-      eph <- peopleHandlesMap if eph.hid === q.id
-      hph <- peopleHandlesMap if hph.pid === eph.pid
-      h <- handles if h.id === hph.hid
-    } yield h
+      ph <- peopleHandlesMap if ph.hid === h.id
+      p <- ph.peopleFK
+    } yield p
 
-  def handlesByAuth(auth: Column[String])(h: DAL#Handles): Column[Boolean] = {
+  def knownHandlesByAuth(h: DAL#Handles, auth: Column[String]): Column[Boolean] = {
     h.auth === auth && h.handle.isNotNull
   }
 }

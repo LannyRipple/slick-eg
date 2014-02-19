@@ -1,9 +1,10 @@
 package me.ljr.slickeg.model
+package cake
 
 trait HandlesCake {
   self: DALInjector =>
 
-  import dbconf.slickDriver.simple._
+  import slickDriver.simple._
 
   val handles = TableQuery[Handles]
 
@@ -19,12 +20,9 @@ trait HandlesCake {
 
     def * = (id, auth, md5, handle.?) <> (Handle.tupled, Handle.unapply)
 
+    // Constraints
     def uniqAuthMd5 = index("h_uniqAuthMd5", (auth, md5), unique = true)
     def uniqAuthHandle = index("h_uniqAuthHandle", (auth, handle), unique = true)
     def idxHandle = index("h_idxHandle", handle)
   }
 }
-
-class HandleId(val id: Long) extends AnyVal
-
-case class Handle(id: HandleId, auth: String, md5: String, handle: Option[String])

@@ -9,15 +9,16 @@ class API(override protected val DAL: DAL) extends QueryLib(DAL) {
 
   import DAL.slickDriver.simple._
 
-  private val db = DAL.db
+  private val db = DAL.database
 
-  def getHandlesFromEmd5ViaPeople(emd5: Column[String]): List[String] = {
+  def emd52handlesViaPeople(emd5: Column[String], targetAuth: Column[String] = "twitter"): List[String] = {
     db withSession {implicit session =>
       val q = for {
         eh <- handlesFromMd5("email", emd5)
-        th <- relatedHandlesViaPeople(eh)
-                if handlesByAuth("twitter")(th)
-      } yield th.handle
+        p <- relatedPeople(eh)
+        h <- relatedHandles(p)
+                if knownHandlesByAuth(h, targetAuth)
+      } yield h.handle
 
       q.list()
     }
