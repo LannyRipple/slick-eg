@@ -48,7 +48,9 @@ case class DBConf(
       //
       // Alternative debugging tool is to put
       //
-      //     org.h2.tools.Server.startWebServer(db.createConnection())
+      //     val conn = db.createConnection()
+      //     org.h2.tools.Server.startWebServer(conn)
+      //     conn.close()
       //
       // in your code to open an H2 browser.
       org.h2.tools.Server.createTcpServer().start()
