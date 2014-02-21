@@ -41,22 +41,6 @@ case class DBConf(
    * @see com.spotright.models.slick.BoneCPConfigBuilder
    */
   lazy val database: Database = {
-    if (debug && jdbcUrl.startsWith("jdbc:h2:mem")) {
-      // Start the TCP server so we can connect from a terminal using org.h2.tools.Shell
-      // with jdbcUrl "jdbc:h2:tcp://localhost/mem:test"
-      //
-      // See: http://h2-database.66688.n3.nabble.com/In-Memory-Database-and-TCP-Server-Queries-td4027147.html
-      //
-      // Alternative debugging tool is to put
-      //
-      //     val conn = db.createConnection()
-      //     org.h2.tools.Server.startWebServer(conn)
-      //     conn.close()
-      //
-      // in your code to open an H2 browser.
-      org.h2.tools.Server.createTcpServer().start()
-    }
-
     Database.forURL(
       jdbcUrl,
       driver = jdbcDriverName,
